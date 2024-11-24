@@ -1,4 +1,96 @@
----
----
 
-@import "{{ jekyll-theme-midnight }}";
+body {
+    background-color: #0d1117; /* Dark background */
+    color: #a9dc76; /* Bright green text */
+    font-family: "Source Code Pro", monospace; /* Programmer's monospace font */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+    border-bottom: 1px solid #333;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: #a9dc76;
+}
+
+header p {
+    font-size: 1.2rem;
+    color: #78dce8;
+}
+
+nav {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+nav a {
+    color: #a9dc76;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    color: #a9dc76;
+}
+
+p {
+    margin: 1rem 0;
+    color: #f8f8f2; /* Lighter text for better readability */
+}
+
+a {
+    color: #78dce8; /* Bright cyan for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+blockquote {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 3px solid #a9dc76;
+    color: #dcdcdc; /* Muted white for quotes */
+    background-color: #1e1e1e; /* Slightly lighter background for quotes */
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #111;
+    color: #78dce8;
+    border-top: 1px solid #333;
+    font-size: 0.8rem;
+}
+
+footer a {
+    color: #a9dc76;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.date {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-left: 0.5rem;
+}
