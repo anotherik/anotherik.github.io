@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YW5vdGhlcmlr.</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>./YW5vdGhlcmlr</h1>
+        <p>Ricardo Gonçalves</p>
+    </header>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    <main>
+        <p>Welcome to this space dedicated to cybersecurity, ethical hacking, and learning—exploring insights, sharing writeups, projects, and research, and diving into the landscape of digital security.</p>
+
+        <!-- Section for CTF Write-ups -->
+        <section id="ctf-writeups">
+            <h2>CTFs Write-ups</h2>
+            <ul id="ctf-list"></ul>
+        </section>
+
+        <!-- Section for Research Items -->
+        <section id="research-resources">
+            <h2>Research items and vulnerabilities</h2>
+            <ul id="research-list"></ul>
+        </section>
+
+        <!-- Section for Scientific publications -->
+        <section id="scientific-publications">
+            <h2>Scientific publications</h2>
+            <ul id="scientific-publications-list"></ul>
+        </section>
+
+        <!-- Section for Projects -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul id="projects-list"></ul>
+        </section>
+
+    </main>
+    <footer>
+        &copy; 2024 Ricardo Gonçalves</a>.
+    </footer>
+
+    <script>
+        fetch('data/posts.json')
+            .then(response => response.json())
+            .then(data => {
+                // Populate CTF Write-ups
+                const ctfList = document.getElementById("ctf-list");
+                data.ctfWriteups.forEach(post => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
+                    ctfList.appendChild(li);
+                });
+
+                // Populate Research Items
+                const researchList = document.getElementById("research-list");
+                data.researchItems.forEach(post => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
+                    researchList.appendChild(li);
+                });
+
+                // Populate Scientific publications
+                const publicationsList = document.getElementById("scientific-publications-list");
+                data.scientificPublications.forEach(post => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
+                    publicationsList.appendChild(li);
+                });
+
+                // Populate Scientific publications
+                const projectsList = document.getElementById("projects-list");
+                data.projectsListItems.forEach(post => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
+                    projectsList.appendChild(li);
+                });
+
+            });
+    </script>
+
+</body>
+</html>
