@@ -1,10 +1,16 @@
 {
+    "projectsListItems": [
+        {"date": "2024", "title": "ThreatByte - vulnerable Python (Flask) web application.", "link": "https://github.com/anotherik/ThreatByte"},
+        {"date": "2017", "title": "Rogue AP Detector - Detect WiFi Rogue Access Points, and covering the most commonly known WiFi attacks.", "link": "https://github.com/anotherik/RogueAP-Detector"},
+        {"date": "2016", "title": "A Prolog-based project for interpreting natural language questions about geographical sites and visually presenting the results.", "link": "https://github.com/anotherik/Prolog"}
+    ],
     "ctfWriteups": [
         {"date": "08-09-2018", "title": "ØxＯＰＯＳɆＣ 2018 Summer Challenge - Writeup", "link": "posts/ctf5.html"},
         {"date": "09-10-2016", "title": "Mystery session | Pixels Camp Security CTF 2016 Qualifiers - Writeup", "link": "posts/ctf4.html"},
         {"date": "09-10-2016", "title": "Read Email (Pwnable) | Pixels Camp Security CTF 2016 Qualifiers - Writeup", "link": "posts/ctf3.html"},
         {"date": "29-04-2016", "title": "Wallowing Wallabies – Part One (Web) | Google CTF 2016 - Writeup", "link": "posts/ctf2.html"},
-        {"date": "04-03-2016", "title": "DES OFB (Crypto) | Boston Key Party CTF 2016 - Writeup", "link": "posts/ctf1.html"}
+        {"date": "04-03-2016", "title": "DES OFB (Crypto) | Boston Key Party CTF 2016 - Writeup", "link": "posts/ctf1.html"},
+        {"date": "2015", "title": "RingZer0 Team Online CTF - Write Ups", "link": "https://github.com/anotherik/ringzer0"}
     ],
     "researchItems": [
         {"date": "08-07-2021", "title": "Coursera Broken Object Level Authorization", "link": "https://checkmarx.com/blog/api-crash-course-broken-object-level-authorization-found-in-coursera/"},
@@ -16,9 +22,5 @@
         {"date": "19-10-2017", "title": "On the Implementation of a Cloud-Based Computing Test Bench Environment for Prolog Systems, MDPI journal", "link": "https://www.mdpi.com/2078-2489/8/4/129"},
         {"date": "28-09-2017", "title": "Towards an Automated Test Bench Environment for Prolog Systems, OASIcs (SLATe’17)", "link": "https://drops.dagstuhl.de/storage/01oasics/oasics-vol056_slate2017/OASIcs.SLATE.2017.2/OASIcs.SLATE.2017.2.pdf"}
         
-    ],
-    "projectsListItems": [
-        {"date": "2024", "title": "ThreatByte - vulnerable Python (Flask) web application.", "link": "https://github.com/anotherik/ThreatByte"},
-        {"date": "2017", "title": "Rogue AP Detector - Detect WiFi Rogue Access Points, and covering the most commonly known WiFi attacks.", "link": "https://github.com/anotherik/RogueAP-Detector"}
     ]
 }
