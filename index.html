@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,7 @@
 </head>
 <body>
     <header>
-        <h1>./YW5vdGhlcmlr</h1>
+        <h2>./YW5vdGhlcmlr</h2>
         <p>Ricardo Gonçalves</p>
     </header>
     <nav>
@@ -19,6 +18,12 @@
     </nav>
     <main>
         <p>Welcome to this space dedicated to cybersecurity, ethical hacking, and learning—exploring insights, sharing writeups, projects, and research, and diving into the landscape of digital security.</p>
+
+        <!-- Section for Projects -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <ul id="projects-list"></ul>
+        </section>
 
         <!-- Section for CTF Write-ups -->
         <section id="ctf-writeups">
@@ -38,21 +43,23 @@
             <ul id="scientific-publications-list"></ul>
         </section>
 
-        <!-- Section for Projects -->
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul id="projects-list"></ul>
-        </section>
-
     </main>
     <footer>
-        &copy; 2024 Ricardo Gonçalves</a>.
+        &copy; Ricardo Gonçalves&nbsp;&bull;&nbsp;2024
     </footer>
 
     <script>
         fetch('data/posts.json')
             .then(response => response.json())
             .then(data => {
+                // Populate Projects
+                const projectsList = document.getElementById("projects-list");
+                data.projectsListItems.forEach(post => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
+                    projectsList.appendChild(li);
+                });
+                
                 // Populate CTF Write-ups
                 const ctfList = document.getElementById("ctf-list");
                 data.ctfWriteups.forEach(post => {
@@ -75,14 +82,6 @@
                     const li = document.createElement("li");
                     li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
                     publicationsList.appendChild(li);
-                });
-
-                // Populate Scientific publications
-                const projectsList = document.getElementById("projects-list");
-                data.projectsListItems.forEach(post => {
-                    const li = document.createElement("li");
-                    li.innerHTML = `<span class="date">[${post.date}]</span> <a href="${post.link}">${post.title}</a>`;
-                    projectsList.appendChild(li);
                 });
 
             });
