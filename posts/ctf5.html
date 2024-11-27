@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ØxＯＰＯＳɆＣ 2018 Summer Challenge - Writeup</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <h2>./YW5vdGhlcmlr</h2>
+        <p>ØxＯＰＯＳɆＣ 2018 Summer Challenge - Writeup</p>
+    </header>
+    <nav>
+        <a href="../index.html">Home</a>
+        <a href="../index.html#ctf-writeups">Back to CTF Write-ups</a>
+    </nav>
+    <main>
+        <h2>ØxＯＰＯＳɆＣ 2018 Summer Challenge - Writeup</h2>
+        <span class="date-post">Posted on September 8, 2018</span>
+
+        <ul class="list-inline text-center">
+            <li><a href="#CH1"> Challenge 1 - [Recon] Have a look</a> </li>
+            <li><a href="#CH2"> Challenge 2 - [Misc] Lost in Translation</a> </li>
+            <li><a href="#CH3"> Challenge 3 - [Reverse] Crack me if you can!</a> </li>
+            <li><a href="#CH4"> Challenge 4 - [Web] We love Web 2.0</a> </li>
+            <li><a href="#CH5"> Challenge 5 - [Web] Explorer</a> </li>
+            <li><a href="#CH6"> Challenge 6 - [Pwn] Climbing to the Moon</a> </li>
+          </ul> 
+
+          <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" style="text-align: justify; text-justify: inter-word;">
+              
+              <br>
+              <hr>
+              <!-- Challenge 1 -->
+              <h3 id="CH1">Challenge 1 - [Recon] Have a look</h3>
+
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_1.png" alt="image1" class="centered-image"></img>
+                  </center>
+                  Figure 1: Challenge 1
+              </div>
+
+              <p>At the beginning of the ØxＯＰＯＳɆＣ CTF summer challenge, we were challenged by Jigsaw to play a game!<p> 
+              <p>We needed to find all the flags in order to survive! As so, challenge accepted!</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_2.png" alt="image2" class="centered-image"></img>
+                  </center>
+                  Figure 2: Challenge 1 web page
+              </div>
+              
+
+              <h3>Solution</h3>
+              <p>As with any good reconnaissance, we start by gathering information about our target. For this challenge there is not much passive information gathering that we can do, so, let us skip right into the active information gathering. With a simple nmap scan we can find out that ssh is open (we can take note of this for later):
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_3.png" alt="image3" class="centered-image"></img>                    
+                  </center>
+                  Figure 3: nmap scan
+              </div>                    
+              
+
+              <p>Another interesting approach is trying to find hidden pages and directories in the web server aka DirBuster! There are many flavors around so take your time to find the best one for you! Thus, the next step, dirbuster the application! If we do it over the summerchallenge.apl3b.com we will not have much luck, so let's try it over the next stage of the application:</p>
+
+              <pre>
+              <code>
+http://summerchallenge.apl3b.com/002E95AC03439AF96A79E469AB9B5C872E4A51EE5BEFE23ADEFDE27D1
+48A1ED2F9E90E404859ED34D25836D81268DE9C50E773E4529D434FABA9D9797A1362FD/here                 
+              </code></pre>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_4.png" alt="image4" class="centered-image"></img>                    
+                  </center>
+                  Figure 4: Dirbuster challenge web page
+              </div>      
+              
+              <p>As we can see from Figure 4, a lot of interesting directories and files were found! Heading to the .git folder we can find even more:</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_5.png" alt="image5" class="centered-image"></img>                   
+                  </center>
+                  Figure 5: Challenge 1 directory listing (.git folder)
+              </div>      
+              
+              <p>
+              Well... there's a lot to look for, so the best would be to search for interesting files and folders, from the previous image there are some interesting files and folders that we can investigate: config, description, index, and logs. After digging around all these files the following was found:
+              </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_6.png" alt="image6" class="centered-image"></img>         
+                  </center>
+                  Figure 6: Challenge 1 index file
+              </div>      
+              
+              <br>          
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_7.png" alt="image7" class="centered-image"></img>                   
+                  </center>
+                  Figure 7: strings over 8JUCv3fZ44 page
+              </div>      
+              
+
+              <p>We found the flag inside the 8JUCv3fZ44.html file and the next challenge endpoint:</p>
+
+              <p><b>Flag:</b> <i>flag{Bro_Do_you_even_git?}</i></p>
+
+              <p style="text-align: left; text-justify: inter-word;">
+                  <b>Link:</b> 
+                  <small><a>http://summerchallenge.apl3b.com/1F3A075B51DBBF8F419A751834F85BDD8366AA7A7D553A989B9FEA70
+8671DE263FB9A43B5E4972CFCB2A11666FFF8EECE8DC6454BA7441220D2E16C9C4C2BFD5/index.html</a></small>
+              </p>
+
+              <br>
+              <hr>
+              <!-- Challenge 2 -->
+
+              <h3 id="CH2">Challenge 2 - [Misc] Lost in Translation</h3>
+
+              <br>
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_8.png" alt="image8" class="centered-image"></img>
+                  </center>
+                  Figure 8: Challenge 2
+              </div>   
+              
+
+              <h3>Solution</h3>
+
+              <p>Following the redirect to the new challenge, we were presented with the following riddle:<p> 
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_9.png" alt="image9" class="centered-image"></img>
+                  </center>
+                  Figure 9: Challenge 2 web page
+              </div>   
+              
+
+              <p>If something is strange to us, the best way to find out what it is is to google it. With a few searches, for those who didn't yet know, it's possible to understand that we are looking to <b>ITML</b>, i.e., the web, for a more civilized age. We know what it is, we just need to "translate" it, I mean, code it!</p>
+              <p>
+                  After putting this piece of ITML inside an HTML page you can start to guess what might happen...
+              </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_10.png" alt="image10" class="centered-image"></img>                                    
+                  </center>
+                  Figure 10: ITML inside HTML page
+              </div>   
+              
+
+              <p>And we got the flag and the next challenge link:</p>
+
+              <p><b>Flag:</b> <i>flag{Brain_F*ck_Is_Beautiful}</i></p>
+
+              <p style="text-align: left; text-justify: inter-word;">
+                  <b>Link:</b> 
+                  <small><a>http://summerchallenge.apl3b.com/28561FCA87D718ADCF1F2EADBF01E7E077FD6816A6A995D3873E5D51
+9D854FA7D25C63DA1CB506943EF7116C2454C49D20AFC263FB755A03548917B3B66A9039/index.html</a></small>
+              </p>
+
+              <br>
+              <hr>
+              <!-- Challenge 3 -->
+
+              <h3 id="CH3">Challenge 3 - [Reverse] Crack me if you can!</h3>
+
+              <br>
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_11.png" alt="image11" class="centered-image"></img>
+                  </center>
+                  Figure 11: Challenge 3
+              </div>   
+              
+
+              <h3>Solution</h3>
+
+              <p>In this new challenge, we got to crack a simple file in order to proceed to the next level:<p> 
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_12.png" alt="image12" class="centered-image"></img>
+                  </center>
+                  Figure 12: Challenge 3 web page
+              </div>   
+              
+
+              <p>To get this flag we just need to overflow the file at the right position, if you don't want to look to the memory you can simply brute force it:
+              </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_16.png" alt="image16" class="centered-image"></img>                                    
+                  </center>
+                  Figure 13: Bruteforcing crackmeifucan file
+              </div>   
+              
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_13.png" alt="image13" class="centered-image"></img>                                    
+                  </center>
+                  Figure 14: Popping the flag from crackmeifucan
+              </div>   
+              
+
+              <p>Again, we got the flag and the next challenge link:</p>
+
+              <p><b>Flag:</b> <i>flag{RevEng_FTW}</i></p>
+
+              <p style="text-align: left; text-justify: inter-word;">
+                  <b>Link:</b> 
+                  <small><a>http://summerchallenge.apl3b.com/3AC04107109B0AF9D16E4EFE87327BA916D7E7309E6344EEED444DFE6
+BB121D5BF1BDA3BFFDFD73CC88A231BA5D56DFCF69286E282748FB5124F70B61A9E08D1/</a></small>
+              </p>
+
+
+              <br>
+              <hr>
+              <!-- Challenge 4 -->
+
+              <h3 id="CH4">Challenge 4 - [Web] We love Web 2.0</h3>
+
+              <br>
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_14.png" alt="image14" class="centered-image"></img>
+                  </center>
+                  Figure 15: Challenge 4
+              </div>   
+              
+              <h3>Solution</h3>
+
+              <p>Following the newly obtained link for this challenge we were presented with a simple WordPress website:<p> 
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_15.png" alt="image15" class="centered-image"></img>
+                  </center>
+                  Figure 16: Challenge 4 web page
+              </div>   
+              
+              <p>You can take your time exploring, but I would recommend checking for known vulnerabilities for this specific WordPress version, which is 2.3.1 (you can find it in the source code - Figure 18), taking a look at exploit-db you can find the following known exploits:
+              </p>
+
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_17.png" alt="image17" class="centered-image"></img>                                    
+                  </center>
+                  Figure 17: WordPress 2.3.1 exploit-db known exploits
+              </div>   
+              
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_18.png" alt="image18" class="centered-image"></img>       
+                  </center>
+                  Figure 18: WordPress version at web page source code
+              </div>   
+              
+
+              <p>To help us to achieve this challenge the exploit that we need is the Charset SQL Injection: <a>https://www.exploit-db.com/exploits/4721/</a></p>                             
+
+              <p>
+                  After understanding this vulnerability, which in short takes benefit from a failure in the method to sanitize SQL string for different charsets (you can read all the details in the referred link), we will be able to create the right query to retrieve some useful information from the website database:</p>
+             <p>
+                 First, <b>list all tables:</b>
+                 <pre>
+              <code>
+index.php?
+exact=1&sentence=1&s=%b3%27)))/**/OR/**/TRUE/**/UNION/**/SELECT/**/1,2,3,4,5,table_name
+,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24/**/FROM/**/information_schema.table
+s;%23              
+              </code></pre>
+             </p>
+
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_19.png" alt="image19" class="centered-image"></img>       
+                  </center>
+                  Figure 19: Listing all tables
+              </div>   
+             
+
+             <p>
+                 Second, <b>list the wp_users:</b>
+                 <pre>
+              <code>
+index.php?
+exact=1&sentence=1&s=%b3%27)))/**/OR/**/TRUE/**/UNION/**/SELECT/**/1,2,3,4,5,user_pass,
+7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24/**/FROM/**/wp_users%23
+              </code></pre>
+
+             </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_20.png" alt="image20" class="centered-image"></img>     
+                  </center>
+                  Figure 20: Listing wp_users
+              </div>   
+             
+
+             <p>Finally, reverse that MD5 hash and get the flag! 😈 </p>
+
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_21.png" alt="image21" class="centered-image"></img>      
+                  </center>
+                  Figure 21: MD5 reverse
+              </div>   
+             
+             
+             <p>By now I assume you already know that there is only one user in the wp_users table and that this user is the admin, you can simply find that through the login portal (wp-login.php).</p>
+             <p>After that, you just need to log in and get the flag! 😈 </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_22.png" alt="image22" class="centered-image"></img>     
+                  </center>
+                  Figure 22: Oposec challenge WordPress page logged in Dashboard
+              </div>   
+             
+
+             <p>We are in!! But... where is the Flag? Well... you will need to try harder! 😄 Or just upload a simple web shell and then, get your flag!
+
+It is important to notice that prior to uploading a web shell I searched in all the application corners looking for the flag or anything interesting, but with no avail.
+
+With a simple web shell one is able to list the wp-admin directory and find the so called flag!</p> 
+
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_23.png" alt="image23" class="centered-image"></img>     
+                  </center>
+                  Figure 23: Listing wp-admin directory
+              </div>   
+              
+
+              <p>Or... as we have a shell, just grep all the flags! 👼 </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_24.png" alt="image24" class="centered-image"></img>     					
+                  </center>
+                  Figure 24: Grepping all the flags
+              </div>   
+              
+
+              <p>As we already have all the others, the one that is missing and matching this challenge is the:</p>
+
+              <p><b>Flag:</b> <i>flag{AinT_Wordpress_Secure?}</i></p>
+
+              <p style="text-align: left; text-justify: inter-word;">
+                  <b>Link:</b> 
+                  <small><a>http://summerchallenge.apl3b.com/3AC04107109B0AF9D16E4EFE87327BA916D7E7309E6344EEED444DFE6
+BB121D5BF1BDA3BFFDFD73CC88A231BA5D56DFCF69286E282748FB5124F70B61A9E08D1/wp-content/upl
+oads/2018/.a.php</a></small>
+              </p>
+
+              <p>A quick note for CTF participants and PenTest aspiring ones, after doing your job clean up your mess! 🙂 Don't leave shells around the room, even if you try to hide them...</p>
+              
+              <p>By examining the code it looked strange:</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_25.png" alt="image25" class="centered-image"></img>     					
+                  </center>
+                  Figure 25: r57shell source code
+              </div>   
+              
+
+              <p>And after executing it it presented us with the famous r57shell... 🤔 </p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_37.png" alt="image37" class="centered-image"></img>     					
+                  </center>
+                  Figure 26: r57shell
+              </div>   
+              
+
+              <br>
+              <hr>
+              <!-- Challenge 5 -->
+
+              <h3 id="CH5">Challenge 5 - [Web] Explorer</h3>
+
+              <br>
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_26.png" alt="image26" class="centered-image"></img>
+                  </center>
+                  Figure 27: Challenge 5
+              </div>   
+              
+
+              <h3>Solution</h3>
+
+              <p>You grepped all the possible flags... so... where is the right path?<p> 
+
+              <p>The best approach is to look for interesting files, and what would be an interesting file in a WordPress application? Yes, you are right, <b>wp-config.php.</b></p>
+
+              <p>More information in: <a>https://codex.wordpress.org/Editing_wp-config.php</a></p>
+
+                 <pre>
+              <code>
+supersecretshell.php?cmd=tac%20../wp-config.php
+              </code></pre>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_27.png" alt="image27" class="centered-image"></img>       
+                  </center>
+                  Figure 28: Reading the wp-config file
+              </div>   
+              
+
+              <p>Good job! You just found MySQL credentials! To a database that you already owned... right? Yes... But you are close.</p>                             
+
+              <p>Do you even... reuse passwords? Remember that open ssh service? It's time to go there now:</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_28.png" alt="image28" class="centered-image"></img>       
+                  </center>
+                  Figure 29: SSHing our way in
+              </div>   
+              
+
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_29.png" alt="image29" class="centered-image"></img>       
+                  </center>
+                  Figure 30: Challenge 5 flag
+              </div>   
+              
+
+              <p>There you go! The last but one flag!</p>
+
+              <p><b>Flag:</b> <i>flag{This_is_my_UID._There_are_many_like_it,__but_this_UID_is_mine}</i></p>
+
+
+              <br>
+              <hr>
+              <!-- Challenge 6 -->
+
+              <h3 id="CH6">Challenge 6 - [Pwn] Climbing to the Moon</h3>
+
+              <br>
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_30.png" alt="image30" class="centered-image"></img>
+                  </center>
+                  Figure 31: Challenge 6
+              </div>   
+              
+
+              <h3>Solution</h3>
+
+              <p>At this stage, it is predictable that the last flag will be in the root directory. Thus, you can start by looking for privilege escalation exploits for the target OS. But, before diving into the exploits area why don't we try a simple trick that many times works, the <b>PATH</b> variable privilege escalation, so let's follow the standard flow:</p>
+              
+              <p>I) look for SUID files:</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_31.png" alt="image31" class="centered-image"></img>       
+                  </center>
+                  Figure 32: Searching SUID files
+              </div>   
+              
+              <p>That SecOps-Backup-Service looks really interesting! Let's take a look:</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_32.png" alt="image32" class="centered-image"></img>       
+                  </center>
+                  Figure 33: SecOps-Backup Service file permissions
+              </div>   
+              
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_33.png" alt="image33" class="centered-image"></img>       
+                  </center>
+                  Figure 34: Executing SecOps-Backup Service file
+              </div>   
+              
+              <br>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_34.png" alt="image34" class="centered-image"></img>       
+                  </center>
+                  Figure 35: Sneaking inside SecOps-Backup Service file
+              </div>   
+              
+              <p>By analyzing the service we can understand that it uses ssh and scp commands to back up your data in a super secure way!</p>
+              <p>II) Now we just need to manipulate the PATH variable to escalate privileges. Editing the PATH variable by prepending a simple dot “.” will make sure that whenever the program is called, the bash will look for the program in the current directory. Guess what? Yes, you are right! Just create those files in the current directory and make them create a simple bash, then give that Super Secure SCP Backup Service a try!</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_35.png" alt="image35" class="centered-image"></img>       
+                  </center>
+                  Figure 36: root shell
+              </div>   
+              
+              <p>That's it, you have the final flag, and successfully escaped from the Jigsaw maze!</p>
+
+              <div style="width:image width px; font-size:80%; text-align:center;">
+                  <center>
+                      <img src="imgs/ctf5_36.png" alt="image36" class="centered-image"></img>                           
+                  </center>
+                  Figure 37: Challenge 6 flag
+              </div>   
+              
+              <p><b>Flag:</b> <i>flag{You_aRe_fRee_Now_Congratulations_and_enJoy_Yout_life}</i></p>
+
+              <p>Kudos for the great challenges!</p>
+
+    </main>
+    <footer>
+        &copy; Ricardo Gonçalves&nbsp;&bull;&nbsp;2024
+    </footer>
+</body>
+</html>
