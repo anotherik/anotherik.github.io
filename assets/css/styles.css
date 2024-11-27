@@ -1,4 +1,3 @@
-
 body {
     background-color: #0d1117; /* Dark background */
     color: #a9dc76; /* Bright green text */
@@ -94,3 +93,26 @@ footer a:hover {
     color: #aaa;
     margin-left: 0.5rem;
 }
+
+.date-post{
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #78dce8;
+}
+
+/* Center images and add spacing */
+.centered-image {
+    display: block;
+    margin: 1rem auto; /* Centers the image horizontally */
+    max-width: 100%; /* Ensures the image doesn't exceed the container width */
+    height: auto; /* Maintains aspect ratio */
+}
+
+/* Align images with text */
+.inline-image {
+    vertical-align: middle; /* Aligns with text */
+    margin: 0 0.5rem; /* Adds space around the image */
+    max-width: 100%; /* Ensures responsiveness */
+    height: auto; /* Maintains aspect ratio */
+}
+
