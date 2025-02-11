@@ -13,6 +13,7 @@
         {"date": "2015", "title": "RingZer0 Team Online CTF - Write Ups", "link": "https://github.com/anotherik/ringzer0"}
     ],
     "researchItems": [
+        {"date": "08-02-2025", "title": "How MIME Type Handling in Go Can Lead to Unintended File Downloads", "link": "https://medium.com/@anotherik/how-mime-type-handling-in-go-can-lead-to-unintended-file-downloads-37e1798a27b5"},
         {"date": "08-07-2021", "title": "Coursera Broken Object Level Authorization", "link": "https://checkmarx.com/blog/api-crash-course-broken-object-level-authorization-found-in-coursera/"},
         {"date": "11-02-2021", "title": "Deskpro Cross-site scripting leading to admin session hijacking", "link": "https://checkmarx.com/blog/assistance-required-xss-vulnerability-discovered-in-helpdesk-software-solution-deskpro/"},
         {"date": "07-05-2018", "title": "Diving Deep into Regular Expression Denial of Service (ReDoS) in Go", "link": "https://checkmarx.com/blog/redos-go/"}
