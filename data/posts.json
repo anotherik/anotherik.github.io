@@ -1,5 +1,6 @@
 {
     "projectsListItems": [
+        {"date": "2025", "title": "Pickle Inspector (pickle_inspector) is a static analysis tool to detect insecure deserialization vulnerabilities in Python projects.", "link": "https://github.com/anotherik/pickle_inspector"},
         {"date": "2024", "title": "ThreatByte - vulnerable Python (Flask) web application.", "link": "https://github.com/anotherik/ThreatByte"},
         {"date": "2017", "title": "Rogue AP Detector - Detect WiFi Rogue Access Points, and covering the most commonly known WiFi attacks.", "link": "https://github.com/anotherik/RogueAP-Detector"},
         {"date": "2016", "title": "A Prolog-based project for interpreting natural language questions about geographical sites and visually presenting the results.", "link": "https://github.com/anotherik/Prolog"}
