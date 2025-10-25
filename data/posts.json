@@ -15,6 +15,7 @@
         {"date": "2015", "title": "RingZer0 Team Online CTF - Write Ups", "link": "https://github.com/anotherik/ringzer0"}
     ],
     "researchItems": [
+        {"date": "22-10-2025", "title": "Scapy Session Loading Vulnerable to Arbitrary Code Execution via Untrusted Pickle Deserialization", "link": "https://github.com/advisories/GHSA-cq46-m9x9-j8w2"},
         {"date": "09-10-2025", "title": "GoThreatScope: Building a Local MCP Server for Intelligent Security Scanning", "link": "https://medium.com/@anotherik/gothreatscope-building-a-local-mcp-server-for-intelligent-security-scanning-ecf690835d53"},
         {"date": "04-08-2025", "title": "Pickle Inspector: Finding Hidden Deserialization Risks in Python’s AI Era", "link": "https://medium.com/@anotherik/pickle-inspector-finding-hidden-deserialization-risks-in-pythons-ai-era-99448af3a620"},
         {"date": "08-02-2025", "title": "How MIME Type Handling in Go Can Lead to Unintended File Downloads", "link": "https://medium.com/@anotherik/how-mime-type-handling-in-go-can-lead-to-unintended-file-downloads-37e1798a27b5"},
