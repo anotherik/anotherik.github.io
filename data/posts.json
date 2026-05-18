@@ -1,5 +1,7 @@
 {
     "projectsListItems": [
+        {"date": "2026", "title": "ThreatByte-MCP is a deliberately vulnerable, MCP-inspired case management web app.", "link": "https://github.com/anotherik/ThreatByte-MCP"},
+        {"date": "2026", "title": "Safe-Run: Supply-chain safety gate for developers.", "link": "https://github.com/anotherik/safe-run"},
         {"date": "2025", "title": "GoThreatScope: Go-based SBOM, vulnerability, and secret scanner with MCP support.", "link": "https://github.com/anotherik/gothreatscope"},
         {"date": "2025", "title": "Pickle Inspector (pickle_inspector) is a static analysis tool to detect insecure deserialization vulnerabilities in Python projects.", "link": "https://github.com/anotherik/pickle_inspector"},
         {"date": "2024", "title": "ThreatByte - vulnerable Python (Flask) web application.", "link": "https://github.com/anotherik/ThreatByte"},
@@ -15,6 +17,7 @@
         {"date": "2015", "title": "RingZer0 Team Online CTF - Write Ups", "link": "https://github.com/anotherik/ringzer0"}
     ],
     "researchItems": [
+        {"date": "14-05-2026", "title": "MCP: Your AI Analyst’s New Attack Surface", "link": "https://medium.com/@anotherik/mcp-your-ai-analysts-new-attack-surface-52cd0d590b72"},
         {"date": "22-10-2025", "title": "Scapy Session Loading Vulnerable to Arbitrary Code Execution via Untrusted Pickle Deserialization", "link": "https://github.com/advisories/GHSA-cq46-m9x9-j8w2"},
         {"date": "09-10-2025", "title": "GoThreatScope: Building a Local MCP Server for Intelligent Security Scanning", "link": "https://medium.com/@anotherik/gothreatscope-building-a-local-mcp-server-for-intelligent-security-scanning-ecf690835d53"},
         {"date": "04-08-2025", "title": "Pickle Inspector: Finding Hidden Deserialization Risks in Python’s AI Era", "link": "https://medium.com/@anotherik/pickle-inspector-finding-hidden-deserialization-risks-in-pythons-ai-era-99448af3a620"},
